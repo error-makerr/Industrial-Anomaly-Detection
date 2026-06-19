@@ -359,3 +359,28 @@ This project is released for academic and research purposes. The source datasets
 - **Supervisor**: Dewan Ziaul Karim, Senior Lecturer, BRAC University
 - **Co-supervisor**: Mohammad Rakibul Hasan Mahin, Lecturer, BRAC University
 - Built with [PyTorch](https://pytorch.org/), [timm](https://github.com/huggingface/pytorch-image-models), and [scikit-learn](https://scikit-learn.org/)
+
+
+Requirements.txt
+torch>=2.0.0
+torchvision>=0.15.0
+timm>=0.9.0
+scikit-learn>=1.3.0
+pandas>=2.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+Pillow>=10.0.0
+scipy>=1.11.0
+tqdm>=4.65.0
+
+# Optional — for FLOP counting
+# thop>=0.1.1
+
+# Optional — for web app
+# flask>=3.0.0
+# gradio>=4.0.0
+
+# Optional — for LoRA synthetic generation
+# diffusers>=0.25.0
+# peft>=0.7.0

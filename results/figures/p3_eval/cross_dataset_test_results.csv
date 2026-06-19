@@ -1,0 +1,4 @@
+source,n_total,n_defective,binary_acc,binary_auc,defect_F1
+mvtec,556,97,0.9802,0.9926,0.9429
+casting,850,0,0.9988,0.9999,
+magnetic,262,51,0.9847,0.9823,0.375

@@ -1,0 +1,4 @@
+Model,Backbone,Params (M),Best Epoch,Val F1,Binary Acc,Product Acc,Key feature
+EdgeNetV2,MobileNetV3-Large,3.89,58,0.844,95.2%,98.1%,"First multi-task prototype, BCE + manual weights"
+EdgeNetV3,EfficientNet-B0 + teacher,5.4,45,0.912,98.4%,99.6%,"Teacher-initialised, focal γ=4, cosine LR"
+EdgeNetV4,MBConv-SE (B2 config),7.81,124,0.9662,99.3%,100.0%,"Multi-scale head, CoordAttn, inv-freq + per-class γ, EMA, SGDR"

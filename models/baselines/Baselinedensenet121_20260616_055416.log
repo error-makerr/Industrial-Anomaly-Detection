@@ -1,0 +1,1589 @@
+
+Device  : cuda
+Log     : baseline_results/Baselinedensenet121_20260616_055416.log
+
+==========================================================================
+  DATASET STATISTICS
+==========================================================================
+
+  Total images                    :  21,344
+  Normal (good)                   :   9,656  (45.2%)
+  Defective                       :  11,688  (54.8%)
+
+  Splits  →  Train:16,337  |  Val:3,339  |  Test:1,668
+  casting              8,648   6,052  1,746    850
+  magnetic             3,266   2,463    541    262
+  mvtec                9,430   7,822  1,052    556
+
+  Defect class distribution:
+  Class                    Total   Train    Val   Test
+  ----------------------------------------------------
+  [0] contamination            944     899     33     12
+  [1] cut                      634     605     17     12
+  [2] deformation            1,200   1,177     15      8
+  [3] fracture                 800     732     43     25
+  [4] hole_void                600     520     54     26
+  [5] minor_defect             250     196     42     12
+  [6] scratch                1,100   1,054     29     17
+  [7] surface_quality          638     539     63     36
+
+
+==========================================================================
+  TRAINING CONFIG — Baseline densenet121
+==========================================================================
+
+  Backbone     : timm densenet121  (pretrained=True, UNMODIFIED)
+  Total params : 6.981M
+  Feature dim  : 1024
+  Image size   : 224×224
+  Batch size   : 32  |  Epochs: 100  |  Patience: 40
+  Optimizer    : AdamW  (single LR group, lr=1.0e-04, wd=1e-4)
+  Scheduler    : CosineAnnealingLR  (T_max=100, eta_min=1e-6)
+  Augmentation : RandomHorizontalFlip only
+  Task weights : bin=0.35  defect=0.4  prod=0.25
+  Loss         : BCEWithLogitsLoss + CrossEntropyLoss
+  Extras       : NONE  (no EMA, no CutMix, no WeightedSampler)
+
+==========================================================================
+  TRAINING
+==========================================================================
+
+Epoch [  1/100]  LR=1.00e-04  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=88.5%  Def=59.6%  F1=0.533  Prod=85.5%
+  Val   → Bin=94.2%  Def=72.0%  F1=0.670  Prod=99.5%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.718   0.848   0.778  ↑
+  cut                       0.485   0.941   0.640  ↑
+  deformation               0.667   0.533   0.593  ↑
+  fracture                  0.645   0.930   0.762  ↑
+  hole_void                 0.881   0.963   0.920  ↑
+  minor_defect              0.684   0.310   0.426  ↑  ◄ WATCH
+  scratch                   0.429   0.414   0.421  ↑  ◄ WATCH
+  surface_quality           1.000   0.698   0.822  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.689   0.705   0.670
+
+  ✅ NEW BEST  defect_f1=0.6703 → saved Baselinedensenet121_best.pth
+
+Epoch [  2/100]  LR=1.00e-04  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=94.8%  Def=76.0%  F1=0.730  Prod=92.1%
+  Val   → Bin=95.3%  Def=76.0%  F1=0.721  Prod=99.3%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.964   0.818   0.885  ↑
+  cut                       0.909   0.588   0.714  ↑
+  deformation               0.588   0.667   0.625  ↑
+  fracture                  0.621   0.953   0.752  ↓
+  hole_void                 0.911   0.944   0.927  ↑
+  minor_defect              0.604   0.690   0.644  ↑
+  scratch                   0.409   0.310   0.353  ↓  ◄ WATCH
+  surface_quality           1.000   0.762   0.865  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.751   0.717   0.721
+
+  ✅ NEW BEST  defect_f1=0.7208 → saved Baselinedensenet121_best.pth
+
+Epoch [  3/100]  LR=9.99e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=96.4%  Def=83.0%  F1=0.806  Prod=93.9%
+  Val   → Bin=96.2%  Def=80.1%  F1=0.786  Prod=99.1%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.929   0.788   0.852  ↓
+  cut                       0.882   0.882   0.882  ↑
+  deformation               0.632   0.800   0.706  ↑
+  fracture                  0.725   0.860   0.787  ↑
+  hole_void                 0.898   0.981   0.938  ↑
+  minor_defect              0.846   0.524   0.647  →
+  scratch                   0.500   0.759   0.603  ↑
+  surface_quality           0.962   0.794   0.870  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.797   0.799   0.786
+
+  ✅ NEW BEST  defect_f1=0.7857 → saved Baselinedensenet121_best.pth
+
+Epoch [  4/100]  LR=9.98e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=97.0%  Def=86.7%  F1=0.845  Prod=95.3%
+  Val   → Bin=96.7%  Def=80.7%  F1=0.778  Prod=99.6%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.963   0.788   0.867  ↑
+  cut                       0.812   0.765   0.788  ↓
+  deformation               0.591   0.867   0.703  →
+  fracture                  0.631   0.953   0.759  ↓
+  hole_void                 0.898   0.981   0.938  →
+  minor_defect              0.818   0.643   0.720  ↑
+  scratch                   0.765   0.448   0.565  ↓
+  surface_quality           0.930   0.841   0.883  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.801   0.786   0.778
+
+  (no improvement  best_f1=0.7857)
+
+Epoch [  5/100]  LR=9.96e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=97.4%  Def=89.8%  F1=0.881  Prod=96.2%
+  Val   → Bin=96.8%  Def=80.7%  F1=0.760  Prod=99.7%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             1.000   0.667   0.800  ↓
+  cut                       0.909   0.588   0.714  ↓
+  deformation               0.571   0.533   0.552  ↓
+  fracture                  0.745   0.884   0.809  ↑
+  hole_void                 0.898   0.981   0.938  →
+  minor_defect              0.621   0.857   0.720  →
+  scratch                   0.762   0.552   0.640  ↑
+  surface_quality           0.933   0.889   0.911  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.805   0.744   0.760
+
+  (no improvement  best_f1=0.7857)
+
+Epoch [  6/100]  LR=9.94e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=97.9%  Def=91.9%  F1=0.903  Prod=96.9%
+  Val   → Bin=97.1%  Def=81.4%  F1=0.782  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.778   0.848   0.812  ↑
+  cut                       0.867   0.765   0.812  ↑
+  deformation               0.833   0.667   0.741  ↑
+  fracture                  0.814   0.814   0.814  ↑
+  hole_void                 0.946   0.981   0.964  ↑
+  minor_defect              0.667   0.810   0.731  ↑
+  scratch                   0.667   0.414   0.511  ↓
+  surface_quality           0.862   0.889   0.875  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.804   0.773   0.782
+
+  ✅ NEW BEST  defect_f1=0.7824 → saved Baselinedensenet121_best.pth
+
+Epoch [  7/100]  LR=9.91e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=98.2%  Def=93.7%  F1=0.926  Prod=97.3%
+  Val   → Bin=97.3%  Def=81.1%  F1=0.763  Prod=99.8%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.929   0.788   0.852  ↑
+  cut                       0.909   0.588   0.714  ↓
+  deformation               0.588   0.667   0.625  ↓
+  fracture                  0.771   0.860   0.813  →
+  hole_void                 0.946   0.981   0.964  →
+  minor_defect              0.615   0.762   0.681  ↓
+  scratch                   0.800   0.414   0.545  ↑
+  surface_quality           0.870   0.952   0.909  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.804   0.752   0.763
+
+  (no improvement  best_f1=0.7824)
+
+Epoch [  8/100]  LR=9.88e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=98.4%  Def=94.4%  F1=0.932  Prod=97.5%
+  Val   → Bin=97.3%  Def=84.1%  F1=0.808  Prod=99.6%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.939   0.939   0.939  ↑
+  cut                       1.000   0.706   0.828  ↑
+  deformation               0.733   0.733   0.733  ↑
+  fracture                  0.804   0.953   0.872  ↑
+  hole_void                 0.930   0.981   0.955  ↓
+  minor_defect              0.714   0.595   0.649  ↓
+  scratch                   0.600   0.517   0.556  ↑
+  surface_quality           0.897   0.968   0.931  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.827   0.799   0.808
+
+  ✅ NEW BEST  defect_f1=0.8080 → saved Baselinedensenet121_best.pth
+
+Epoch [  9/100]  LR=9.84e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=98.8%  Def=95.5%  F1=0.946  Prod=97.9%
+  Val   → Bin=98.1%  Def=85.5%  F1=0.832  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.882   0.909   0.896  ↓
+  cut                       0.923   0.706   0.800  ↓
+  deformation               0.647   0.733   0.688  ↓
+  fracture                  0.867   0.907   0.886  ↑
+  hole_void                 0.945   0.963   0.954  →
+  minor_defect              0.689   0.738   0.713  ↑
+  scratch                   0.765   0.897   0.825  ↑
+  surface_quality           0.981   0.825   0.897  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.837   0.835   0.832
+
+  ✅ NEW BEST  defect_f1=0.8323 → saved Baselinedensenet121_best.pth
+
+Epoch [ 10/100]  LR=9.80e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=98.8%  Def=96.5%  F1=0.958  Prod=98.1%
+  Val   → Bin=97.2%  Def=84.1%  F1=0.815  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.879   0.879   0.879  ↓
+  cut                       1.000   0.706   0.828  ↑
+  deformation               0.857   0.800   0.828  ↑
+  fracture                  0.864   0.884   0.874  ↓
+  hole_void                 0.855   0.981   0.914  ↓
+  minor_defect              0.681   0.762   0.719  ↑
+  scratch                   0.722   0.448   0.553  ↓
+  surface_quality           0.909   0.952   0.930  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.846   0.802   0.815
+
+  (no improvement  best_f1=0.8323)
+
+Epoch [ 11/100]  LR=9.76e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=98.8%  Def=96.3%  F1=0.958  Prod=98.3%
+  Val   → Bin=97.7%  Def=84.5%  F1=0.808  Prod=99.8%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.931   0.818   0.871  ↓
+  cut                       1.000   0.647   0.786  ↓
+  deformation               0.727   0.533   0.615  ↓
+  fracture                  0.800   0.930   0.860  ↓
+  hole_void                 0.930   0.981   0.955  ↑
+  minor_defect              0.643   0.857   0.735  ↑
+  scratch                   0.857   0.621   0.720  ↑
+  surface_quality           0.934   0.905   0.919  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.853   0.787   0.808
+
+  (no improvement  best_f1=0.8323)
+
+Epoch [ 12/100]  LR=9.71e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=98.9%  Def=97.5%  F1=0.971  Prod=98.6%
+  Val   → Bin=98.1%  Def=87.8%  F1=0.840  Prod=99.6%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.833   0.909   0.870  →
+  cut                       1.000   0.529   0.692  ↓
+  deformation               0.733   0.733   0.733  ↑
+  fracture                  0.788   0.953   0.863  →
+  hole_void                 0.946   0.981   0.964  ↑
+  minor_defect              0.854   0.833   0.843  ↑
+  scratch                   0.913   0.724   0.808  ↑
+  surface_quality           0.938   0.952   0.945  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.876   0.827   0.840
+
+  ✅ NEW BEST  defect_f1=0.8397 → saved Baselinedensenet121_best.pth
+
+Epoch [ 13/100]  LR=9.65e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.0%  Def=97.3%  F1=0.966  Prod=98.5%
+  Val   → Bin=97.9%  Def=84.8%  F1=0.833  Prod=99.7%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.960   0.727   0.828  ↓
+  cut                       0.938   0.882   0.909  ↑
+  deformation               0.667   0.800   0.727  ↓
+  fracture                  0.759   0.953   0.845  ↓
+  hole_void                 0.961   0.907   0.933  ↓
+  minor_defect              0.680   0.810   0.739  ↓
+  scratch                   0.905   0.655   0.760  ↓
+  surface_quality           0.934   0.905   0.919  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.850   0.830   0.833
+
+  (no improvement  best_f1=0.8397)
+
+Epoch [ 14/100]  LR=9.59e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.3%  Def=98.2%  F1=0.977  Prod=98.8%
+  Val   → Bin=98.1%  Def=87.8%  F1=0.846  Prod=99.5%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.935   0.879   0.906  ↑
+  cut                       1.000   0.706   0.828  ↓
+  deformation               0.769   0.667   0.714  ↓
+  fracture                  0.820   0.953   0.882  ↑
+  hole_void                 0.964   0.981   0.972  ↑
+  minor_defect              0.704   0.905   0.792  ↑
+  scratch                   0.818   0.621   0.706  ↓
+  surface_quality           1.000   0.937   0.967  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.876   0.831   0.846
+
+  ✅ NEW BEST  defect_f1=0.8459 → saved Baselinedensenet121_best.pth
+
+Epoch [ 15/100]  LR=9.53e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.3%  Def=97.7%  F1=0.974  Prod=98.7%
+  Val   → Bin=98.3%  Def=86.5%  F1=0.841  Prod=99.7%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.933   0.848   0.889  ↓
+  cut                       0.938   0.882   0.909  ↑
+  deformation               0.818   0.600   0.692  ↓
+  fracture                  0.792   0.884   0.835  ↓
+  hole_void                 0.914   0.981   0.946  ↓
+  minor_defect              0.745   0.905   0.817  ↑
+  scratch                   0.857   0.621   0.720  ↑
+  surface_quality           0.934   0.905   0.919  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.866   0.828   0.841
+
+  (no improvement  best_f1=0.8459)
+
+Epoch [ 16/100]  LR=9.46e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.3%  Def=98.3%  F1=0.979  Prod=99.1%
+  Val   → Bin=98.0%  Def=86.8%  F1=0.843  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.931   0.818   0.871  ↓
+  cut                       1.000   0.765   0.867  ↓
+  deformation               0.706   0.800   0.750  ↑
+  fracture                  0.816   0.930   0.870  ↑
+  hole_void                 1.000   0.944   0.971  ↑
+  minor_defect              0.702   0.952   0.808  ↓
+  scratch                   0.889   0.552   0.681  ↓
+  surface_quality           0.935   0.921   0.928  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.872   0.835   0.843
+
+  (no improvement  best_f1=0.8459)
+
+Epoch [ 17/100]  LR=9.39e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.3%  Def=98.6%  F1=0.982  Prod=99.0%
+  Val   → Bin=98.6%  Def=87.5%  F1=0.841  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             1.000   0.879   0.935  ↑
+  cut                       0.867   0.765   0.812  ↓
+  deformation               0.818   0.600   0.692  ↓
+  fracture                  0.804   0.953   0.872  →
+  hole_void                 0.964   0.981   0.972  →
+  minor_defect              0.735   0.857   0.791  ↓
+  scratch                   0.944   0.586   0.723  ↑
+  surface_quality           0.897   0.968   0.931  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.879   0.824   0.841
+
+  ✅ NEW BEST  defect_f1=0.8414 → saved Baselinedensenet121_best.pth
+
+Epoch [ 18/100]  LR=9.31e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.4%  Def=98.0%  F1=0.981  Prod=98.9%
+  Val   → Bin=98.3%  Def=88.9%  F1=0.866  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.879   0.879   0.879  ↓
+  cut                       0.933   0.824   0.875  ↑
+  deformation               0.750   0.800   0.774  ↑
+  fracture                  0.830   0.907   0.867  ↓
+  hole_void                 0.946   0.981   0.964  ↓
+  minor_defect              0.833   0.833   0.833  ↑
+  scratch                   0.840   0.724   0.778  ↑
+  surface_quality           0.968   0.952   0.960  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.872   0.863   0.866
+
+  ✅ NEW BEST  defect_f1=0.8662 → saved Baselinedensenet121_best.pth
+
+Epoch [ 19/100]  LR=9.23e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.5%  Def=98.6%  F1=0.985  Prod=99.0%
+  Val   → Bin=98.3%  Def=88.5%  F1=0.861  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             1.000   0.909   0.952  ↑
+  cut                       0.923   0.706   0.800  ↓
+  deformation               0.917   0.733   0.815  ↑
+  fracture                  0.792   0.977   0.875  ↑
+  hole_void                 1.000   0.926   0.962  →
+  minor_defect              0.691   0.905   0.784  ↓
+  scratch                   0.900   0.621   0.735  ↓
+  surface_quality           0.968   0.968   0.968  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.899   0.843   0.861
+
+  (no improvement  best_f1=0.8662)
+
+Epoch [ 20/100]  LR=9.14e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.5%  Def=98.4%  F1=0.980  Prod=99.1%
+  Val   → Bin=98.2%  Def=86.8%  F1=0.840  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.906   0.879   0.892  ↓
+  cut                       0.875   0.824   0.848  ↑
+  deformation               0.714   0.667   0.690  ↓
+  fracture                  0.820   0.953   0.882  ↑
+  hole_void                 0.944   0.944   0.944  ↓
+  minor_defect              0.811   0.714   0.759  ↓
+  scratch                   0.808   0.724   0.764  ↑
+  surface_quality           0.910   0.968   0.938  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.849   0.834   0.840
+
+  (no improvement  best_f1=0.8662)
+
+Epoch [ 21/100]  LR=9.05e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.4%  Def=98.6%  F1=0.983  Prod=99.1%
+  Val   → Bin=98.5%  Def=88.5%  F1=0.856  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             1.000   0.879   0.935  ↑
+  cut                       1.000   0.824   0.903  ↑
+  deformation               0.714   0.667   0.690  →
+  fracture                  0.837   0.953   0.891  ↑
+  hole_void                 0.964   0.981   0.972  ↑
+  minor_defect              0.745   0.905   0.817  ↑
+  scratch                   0.850   0.586   0.694  ↓
+  surface_quality           0.938   0.952   0.945  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.881   0.843   0.856
+
+  (no improvement  best_f1=0.8662)
+
+Epoch [ 22/100]  LR=8.96e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.5%  Def=98.8%  F1=0.986  Prod=99.0%
+  Val   → Bin=98.4%  Def=87.5%  F1=0.842  Prod=99.7%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.882   0.909   0.896  ↓
+  cut                       0.867   0.765   0.812  ↓
+  deformation               0.800   0.533   0.640  ↓
+  fracture                  0.844   0.884   0.864  ↓
+  hole_void                 0.963   0.963   0.963  ↓
+  minor_defect              0.720   0.857   0.783  ↓
+  scratch                   0.917   0.759   0.830  ↑
+  surface_quality           0.938   0.952   0.945  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.866   0.828   0.842
+
+  (no improvement  best_f1=0.8662)
+
+Epoch [ 23/100]  LR=8.86e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.5%  Def=98.7%  F1=0.986  Prod=99.2%
+  Val   → Bin=98.6%  Def=85.5%  F1=0.832  Prod=99.8%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.903   0.848   0.875  ↓
+  cut                       1.000   0.824   0.903  ↑
+  deformation               0.733   0.733   0.733  ↑
+  fracture                  0.800   0.930   0.860  →
+  hole_void                 0.963   0.963   0.963  →
+  minor_defect              0.667   0.857   0.750  ↓
+  scratch                   0.882   0.517   0.652  ↓
+  surface_quality           0.934   0.905   0.919  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.860   0.822   0.832
+
+  (no improvement  best_f1=0.8662)
+
+Epoch [ 24/100]  LR=8.76e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.6%  Def=99.0%  F1=0.988  Prod=99.3%
+  Val   → Bin=98.3%  Def=88.9%  F1=0.877  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.964   0.818   0.885  ↑
+  cut                       1.000   0.941   0.970  ↑
+  deformation               0.833   0.667   0.741  ↑
+  fracture                  0.800   0.930   0.860  →
+  hole_void                 0.946   0.981   0.964  →
+  minor_defect              0.736   0.929   0.821  ↑
+  scratch                   0.920   0.793   0.852  ↑
+  surface_quality           0.982   0.873   0.924  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.898   0.867   0.877
+
+  ✅ NEW BEST  defect_f1=0.8771 → saved Baselinedensenet121_best.pth
+
+Epoch [ 25/100]  LR=8.66e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.6%  Def=99.5%  F1=0.992  Prod=99.5%
+  Val   → Bin=98.4%  Def=89.9%  F1=0.877  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.964   0.818   0.885  →
+  cut                       0.933   0.824   0.875  ↓
+  deformation               0.765   0.867   0.812  ↑
+  fracture                  0.804   0.953   0.872  ↑
+  hole_void                 0.964   0.981   0.972  ↑
+  minor_defect              0.837   0.857   0.847  ↑
+  scratch                   0.909   0.690   0.784  ↓
+  surface_quality           0.954   0.984   0.969  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.891   0.872   0.877
+
+  ✅ NEW BEST  defect_f1=0.8772 → saved Baselinedensenet121_best.pth
+
+Epoch [ 26/100]  LR=8.55e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.7%  Def=99.2%  F1=0.990  Prod=99.4%
+  Val   → Bin=98.1%  Def=87.8%  F1=0.852  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.964   0.818   0.885  →
+  cut                       0.933   0.824   0.875  →
+  deformation               0.750   0.800   0.774  ↓
+  fracture                  0.804   0.953   0.872  →
+  hole_void                 0.927   0.944   0.936  ↓
+  minor_defect              0.787   0.881   0.831  ↓
+  scratch                   0.889   0.552   0.681  ↓
+  surface_quality           0.939   0.984   0.961  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.874   0.845   0.852
+
+  (no improvement  best_f1=0.8772)
+
+Epoch [ 27/100]  LR=8.44e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.7%  Def=99.4%  F1=0.993  Prod=99.4%
+  Val   → Bin=97.9%  Def=89.2%  F1=0.886  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.963   0.788   0.867  ↓
+  cut                       1.000   0.882   0.938  ↑
+  deformation               0.824   0.933   0.875  ↑
+  fracture                  0.886   0.907   0.897  ↑
+  hole_void                 0.929   0.963   0.945  ↑
+  minor_defect              0.725   0.881   0.796  ↓
+  scratch                   0.917   0.759   0.830  ↑
+  surface_quality           0.952   0.937   0.944  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.899   0.881   0.886
+
+  ✅ NEW BEST  defect_f1=0.8864 → saved Baselinedensenet121_best.pth
+
+Epoch [ 28/100]  LR=8.32e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.6%  Def=98.8%  F1=0.987  Prod=99.4%
+  Val   → Bin=98.5%  Def=89.5%  F1=0.879  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.967   0.879   0.921  ↑
+  cut                       1.000   0.941   0.970  ↑
+  deformation               0.786   0.733   0.759  ↓
+  fracture                  0.804   0.953   0.872  ↓
+  hole_void                 0.930   0.981   0.955  ↑
+  minor_defect              0.818   0.857   0.837  ↑
+  scratch                   0.870   0.690   0.769  ↓
+  surface_quality           0.967   0.937   0.952  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.893   0.871   0.879
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 29/100]  LR=8.21e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.6%  Def=98.7%  F1=0.983  Prod=99.3%
+  Val   → Bin=98.4%  Def=86.5%  F1=0.843  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.906   0.879   0.892  ↓
+  cut                       0.933   0.824   0.875  ↓
+  deformation               0.750   0.800   0.774  ↑
+  fracture                  0.804   0.860   0.831  ↓
+  hole_void                 0.898   0.981   0.938  ↓
+  minor_defect              0.853   0.690   0.763  ↓
+  scratch                   0.700   0.724   0.712  ↓
+  surface_quality           0.953   0.968   0.961  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.850   0.841   0.843
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 30/100]  LR=8.08e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.6%  Def=99.3%  F1=0.991  Prod=99.4%
+  Val   → Bin=98.5%  Def=88.5%  F1=0.871  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.931   0.818   0.871  ↓
+  cut                       1.000   0.765   0.867  ↓
+  deformation               0.824   0.933   0.875  ↑
+  fracture                  0.854   0.953   0.901  ↑
+  hole_void                 0.914   0.981   0.946  ↑
+  minor_defect              0.767   0.786   0.776  ↑
+  scratch                   0.909   0.690   0.784  ↑
+  surface_quality           0.924   0.968   0.946  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.890   0.862   0.871
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 31/100]  LR=7.96e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.7%  Def=99.2%  F1=0.991  Prod=99.3%
+  Val   → Bin=98.3%  Def=86.1%  F1=0.842  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.963   0.788   0.867  →
+  cut                       1.000   0.706   0.828  ↓
+  deformation               0.722   0.867   0.788  ↓
+  fracture                  0.741   0.930   0.825  ↓
+  hole_void                 0.907   0.907   0.907  ↓
+  minor_defect              0.783   0.857   0.818  ↑
+  scratch                   0.905   0.655   0.760  ↓
+  surface_quality           0.938   0.952   0.945  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.870   0.833   0.842
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 32/100]  LR=7.83e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.7%  Def=99.1%  F1=0.990  Prod=99.5%
+  Val   → Bin=98.4%  Def=88.5%  F1=0.864  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.960   0.727   0.828  ↓
+  cut                       1.000   0.765   0.867  ↑
+  deformation               0.737   0.933   0.824  ↑
+  fracture                  0.848   0.907   0.876  ↑
+  hole_void                 0.883   0.981   0.930  ↑
+  minor_defect              0.818   0.857   0.837  ↑
+  scratch                   0.840   0.724   0.778  ↑
+  surface_quality           0.969   0.984   0.976  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.882   0.860   0.864
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 33/100]  LR=7.70e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.5%  F1=0.995  Prod=99.6%
+  Val   → Bin=99.0%  Def=87.8%  F1=0.855  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.931   0.818   0.871  ↑
+  cut                       1.000   0.765   0.867  →
+  deformation               0.750   0.800   0.774  ↓
+  fracture                  0.820   0.953   0.882  ↑
+  hole_void                 0.912   0.963   0.937  ↑
+  minor_defect              0.800   0.857   0.828  ↓
+  scratch                   0.900   0.621   0.735  ↓
+  surface_quality           0.924   0.968   0.946  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.880   0.843   0.855
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 34/100]  LR=7.57e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.7%  Def=99.3%  F1=0.993  Prod=99.6%
+  Val   → Bin=98.6%  Def=86.8%  F1=0.851  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.967   0.879   0.921  ↑
+  cut                       0.929   0.765   0.839  ↓
+  deformation               0.737   0.933   0.824  ↑
+  fracture                  0.878   0.837   0.857  ↓
+  hole_void                 0.898   0.981   0.938  →
+  minor_defect              0.766   0.857   0.809  ↓
+  scratch                   0.818   0.621   0.706  ↓
+  surface_quality           0.906   0.921   0.913  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.862   0.849   0.851
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 35/100]  LR=7.43e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.4%  F1=0.992  Prod=99.5%
+  Val   → Bin=98.6%  Def=87.5%  F1=0.861  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.933   0.848   0.889  ↓
+  cut                       1.000   0.882   0.938  ↑
+  deformation               0.765   0.867   0.812  ↓
+  fracture                  0.867   0.907   0.886  ↑
+  hole_void                 0.883   0.981   0.930  ↓
+  minor_defect              0.786   0.786   0.786  ↓
+  scratch                   0.818   0.621   0.706  →
+  surface_quality           0.923   0.952   0.938  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.872   0.856   0.861
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 36/100]  LR=7.30e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.7%  Def=99.6%  F1=0.995  Prod=99.6%
+  Val   → Bin=98.7%  Def=89.5%  F1=0.881  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.935   0.879   0.906  ↑
+  cut                       1.000   0.824   0.903  ↓
+  deformation               0.765   0.867   0.812  →
+  fracture                  0.886   0.907   0.897  ↑
+  hole_void                 0.883   0.981   0.930  →
+  minor_defect              0.854   0.833   0.843  ↑
+  scratch                   0.913   0.724   0.808  ↑
+  surface_quality           0.924   0.968   0.946  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.895   0.873   0.881
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 37/100]  LR=7.16e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.7%  Def=99.6%  F1=0.995  Prod=99.6%
+  Val   → Bin=98.8%  Def=88.2%  F1=0.870  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.867   0.788   0.825  ↓
+  cut                       1.000   0.765   0.867  ↓
+  deformation               0.824   0.933   0.875  ↑
+  fracture                  0.870   0.930   0.899  →
+  hole_void                 0.869   0.981   0.922  ↓
+  minor_defect              0.783   0.857   0.818  ↓
+  scratch                   0.913   0.724   0.808  →
+  surface_quality           0.967   0.921   0.943  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.886   0.862   0.870
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 38/100]  LR=7.02e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.1%  F1=0.992  Prod=99.6%
+  Val   → Bin=98.7%  Def=88.9%  F1=0.873  Prod=99.8%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.903   0.848   0.875  ↑
+  cut                       1.000   0.882   0.938  ↑
+  deformation               0.737   0.933   0.824  ↓
+  fracture                  0.872   0.953   0.911  ↑
+  hole_void                 0.930   0.981   0.955  ↑
+  minor_defect              0.778   0.833   0.805  ↓
+  scratch                   0.900   0.621   0.735  ↓
+  surface_quality           0.952   0.937   0.944  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.884   0.874   0.873
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 39/100]  LR=6.87e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.7%  Def=99.4%  F1=0.993  Prod=99.6%
+  Val   → Bin=98.3%  Def=88.2%  F1=0.864  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.933   0.848   0.889  ↑
+  cut                       1.000   0.824   0.903  ↓
+  deformation               0.684   0.867   0.765  ↓
+  fracture                  0.884   0.884   0.884  ↓
+  hole_void                 0.930   0.981   0.955  →
+  minor_defect              0.766   0.857   0.809  →
+  scratch                   0.950   0.655   0.776  ↑
+  surface_quality           0.909   0.952   0.930  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.882   0.859   0.864
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 40/100]  LR=6.73e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.6%  F1=0.994  Prod=99.6%
+  Val   → Bin=98.7%  Def=88.9%  F1=0.876  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.900   0.818   0.857  ↓
+  cut                       1.000   0.765   0.867  ↓
+  deformation               0.875   0.933   0.903  ↑
+  fracture                  0.870   0.930   0.899  ↑
+  hole_void                 0.946   0.981   0.964  ↑
+  minor_defect              0.725   0.881   0.796  ↓
+  scratch                   0.950   0.655   0.776  →
+  surface_quality           0.938   0.952   0.945  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.900   0.865   0.876
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 41/100]  LR=6.58e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.7%  F1=0.997  Prod=99.7%
+  Val   → Bin=98.8%  Def=89.5%  F1=0.877  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.967   0.879   0.921  ↑
+  cut                       0.857   0.706   0.774  ↓
+  deformation               0.750   1.000   0.857  ↓
+  fracture                  0.951   0.907   0.929  ↑
+  hole_void                 0.946   0.981   0.964  →
+  minor_defect              0.729   0.833   0.778  ↓
+  scratch                   0.957   0.759   0.846  ↑
+  surface_quality           0.938   0.952   0.945  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.887   0.877   0.877
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 42/100]  LR=6.43e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.7%  F1=0.997  Prod=99.6%
+  Val   → Bin=98.7%  Def=86.5%  F1=0.840  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             1.000   0.879   0.935  ↑
+  cut                       1.000   0.647   0.786  ↑
+  deformation               0.800   0.800   0.800  ↓
+  fracture                  0.820   0.953   0.882  ↓
+  hole_void                 0.963   0.963   0.963  →
+  minor_defect              0.660   0.833   0.737  ↓
+  scratch                   0.941   0.552   0.696  ↓
+  surface_quality           0.896   0.952   0.923  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.885   0.822   0.840
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 43/100]  LR=6.28e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.4%  F1=0.993  Prod=99.7%
+  Val   → Bin=98.5%  Def=88.2%  F1=0.867  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             1.000   0.879   0.935  →
+  cut                       1.000   0.706   0.828  ↑
+  deformation               0.857   0.800   0.828  ↑
+  fracture                  0.932   0.953   0.943  ↑
+  hole_void                 0.929   0.963   0.945  ↓
+  minor_defect              0.680   0.810   0.739  →
+  scratch                   0.846   0.759   0.800  ↑
+  surface_quality           0.908   0.937   0.922  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.894   0.851   0.867
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 44/100]  LR=6.13e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.9%  F1=0.998  Prod=99.9%
+  Val   → Bin=98.5%  Def=87.5%  F1=0.861  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             1.000   0.848   0.918  ↓
+  cut                       1.000   0.706   0.828  →
+  deformation               0.812   0.867   0.839  ↑
+  fracture                  0.848   0.907   0.876  ↓
+  hole_void                 0.929   0.963   0.945  →
+  minor_defect              0.700   0.833   0.761  ↑
+  scratch                   0.875   0.724   0.792  ↓
+  surface_quality           0.922   0.937   0.929  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.886   0.848   0.861
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 45/100]  LR=5.98e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=0.998  Prod=99.8%
+  Val   → Bin=98.8%  Def=86.8%  F1=0.853  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.966   0.848   0.903  ↓
+  cut                       1.000   0.647   0.786  ↓
+  deformation               0.867   0.867   0.867  ↑
+  fracture                  0.867   0.907   0.886  ↑
+  hole_void                 0.946   0.981   0.964  ↑
+  minor_defect              0.655   0.905   0.760  →
+  scratch                   0.947   0.621   0.750  ↓
+  surface_quality           0.905   0.905   0.905  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.894   0.835   0.853
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 46/100]  LR=5.82e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.9%  F1=0.999  Prod=99.8%
+  Val   → Bin=98.6%  Def=89.2%  F1=0.873  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             1.000   0.879   0.935  ↑
+  cut                       1.000   0.765   0.867  ↑
+  deformation               0.786   0.733   0.759  ↓
+  fracture                  0.851   0.930   0.889  →
+  hole_void                 0.945   0.963   0.954  ↓
+  minor_defect              0.771   0.881   0.822  ↑
+  scratch                   0.917   0.759   0.830  ↑
+  surface_quality           0.909   0.952   0.930  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.897   0.858   0.873
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 47/100]  LR=5.67e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.5%  F1=0.995  Prod=99.7%
+  Val   → Bin=98.5%  Def=88.9%  F1=0.869  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.857   0.909   0.882  ↓
+  cut                       1.000   0.765   0.867  →
+  deformation               0.846   0.733   0.786  ↑
+  fracture                  0.889   0.930   0.909  ↑
+  hole_void                 0.946   0.981   0.964  ↑
+  minor_defect              0.761   0.833   0.795  ↓
+  scratch                   0.880   0.759   0.815  ↓
+  surface_quality           0.937   0.937   0.937  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.889   0.856   0.869
+
+  (no improvement  best_f1=0.8864)
+
+Epoch [ 48/100]  LR=5.52e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.7%  F1=0.996  Prod=99.7%
+  Val   → Bin=98.8%  Def=89.5%  F1=0.887  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.968   0.909   0.938  ↑
+  cut                       1.000   0.765   0.867  →
+  deformation               0.867   0.867   0.867  ↑
+  fracture                  0.927   0.884   0.905  →
+  hole_void                 0.914   0.981   0.946  ↓
+  minor_defect              0.725   0.881   0.796  →
+  scratch                   0.957   0.759   0.846  ↑
+  surface_quality           0.922   0.937   0.929  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.910   0.873   0.887
+
+  ✅ NEW BEST  defect_f1=0.8866 → saved Baselinedensenet121_best.pth
+
+Epoch [ 49/100]  LR=5.36e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.6%  Def=88.2%  F1=0.868  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.966   0.848   0.903  ↓
+  cut                       1.000   0.706   0.828  ↓
+  deformation               0.812   0.867   0.839  ↓
+  fracture                  0.907   0.907   0.907  →
+  hole_void                 0.914   0.981   0.946  →
+  minor_defect              0.706   0.857   0.774  ↓
+  scratch                   0.955   0.724   0.824  ↓
+  surface_quality           0.908   0.937   0.922  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.896   0.853   0.868
+
+  (no improvement  best_f1=0.8866)
+
+Epoch [ 50/100]  LR=5.21e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.8%  F1=0.998  Prod=99.8%
+  Val   → Bin=98.7%  Def=86.8%  F1=0.851  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.903   0.848   0.875  ↓
+  cut                       0.923   0.706   0.800  ↓
+  deformation               0.812   0.867   0.839  →
+  fracture                  0.870   0.930   0.899  ↓
+  hole_void                 0.944   0.944   0.944  →
+  minor_defect              0.708   0.810   0.756  ↓
+  scratch                   0.909   0.690   0.784  ↓
+  surface_quality           0.894   0.937   0.915  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.871   0.841   0.851
+
+  (no improvement  best_f1=0.8866)
+
+Epoch [ 51/100]  LR=5.05e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.8%  F1=0.997  Prod=99.8%
+  Val   → Bin=98.5%  Def=87.5%  F1=0.860  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.931   0.818   0.871  →
+  cut                       1.000   0.765   0.867  ↑
+  deformation               0.737   0.933   0.824  ↓
+  fracture                  0.872   0.953   0.911  ↑
+  hole_void                 0.946   0.981   0.964  ↑
+  minor_defect              0.706   0.857   0.774  ↑
+  scratch                   0.905   0.655   0.760  ↓
+  surface_quality           0.933   0.889   0.911  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.879   0.857   0.860
+
+  (no improvement  best_f1=0.8866)
+
+Epoch [ 52/100]  LR=4.89e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.8%  F1=0.997  Prod=99.7%
+  Val   → Bin=98.3%  Def=88.2%  F1=0.858  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.966   0.848   0.903  ↑
+  cut                       1.000   0.706   0.828  ↓
+  deformation               0.722   0.867   0.788  ↓
+  fracture                  0.909   0.930   0.920  ↑
+  hole_void                 0.964   0.981   0.972  ↑
+  minor_defect              0.698   0.881   0.779  →
+  scratch                   0.900   0.621   0.735  ↓
+  surface_quality           0.923   0.952   0.938  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.885   0.848   0.858
+
+  (no improvement  best_f1=0.8866)
+
+Epoch [ 53/100]  LR=4.74e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.4%  Def=88.2%  F1=0.860  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.906   0.879   0.892  ↓
+  cut                       1.000   0.706   0.828  →
+  deformation               0.737   0.933   0.824  ↑
+  fracture                  0.911   0.953   0.932  ↑
+  hole_void                 0.946   0.981   0.964  ↓
+  minor_defect              0.694   0.810   0.747  ↓
+  scratch                   0.947   0.621   0.750  ↑
+  surface_quality           0.938   0.952   0.945  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.885   0.854   0.860
+
+  (no improvement  best_f1=0.8866)
+
+Epoch [ 54/100]  LR=4.58e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.8%  F1=0.997  Prod=99.9%
+  Val   → Bin=98.4%  Def=88.2%  F1=0.868  Prod=99.8%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.933   0.848   0.889  →
+  cut                       1.000   0.765   0.867  ↑
+  deformation               0.737   0.933   0.824  →
+  fracture                  0.927   0.884   0.905  ↓
+  hole_void                 0.964   0.981   0.972  ↑
+  minor_defect              0.720   0.857   0.783  ↑
+  scratch                   0.952   0.690   0.800  ↑
+  surface_quality           0.881   0.937   0.908  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.889   0.862   0.868
+
+  (no improvement  best_f1=0.8866)
+
+Epoch [ 55/100]  LR=4.43e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.8%  Def=99.7%  F1=0.998  Prod=99.8%
+  Val   → Bin=98.6%  Def=90.9%  F1=0.903  Prod=99.8%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.967   0.879   0.921  ↑
+  cut                       1.000   0.824   0.903  ↑
+  deformation               0.882   1.000   0.938  ↑
+  fracture                  0.929   0.907   0.918  ↑
+  hole_void                 0.946   0.981   0.964  ↓
+  minor_defect              0.766   0.857   0.809  ↑
+  scratch                   0.955   0.724   0.824  ↑
+  surface_quality           0.912   0.984   0.947  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.920   0.895   0.903
+
+  ✅ NEW BEST  defect_f1=0.9027 → saved Baselinedensenet121_best.pth
+
+Epoch [ 56/100]  LR=4.28e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.4%  Def=90.9%  F1=0.902  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.939   0.939   0.939  ↑
+  cut                       1.000   0.882   0.938  ↑
+  deformation               0.875   0.933   0.903  ↓
+  fracture                  0.927   0.884   0.905  ↓
+  hole_void                 0.964   0.981   0.972  ↑
+  minor_defect              0.783   0.857   0.818  ↑
+  scratch                   0.952   0.690   0.800  ↓
+  surface_quality           0.899   0.984   0.939  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.917   0.894   0.902
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 57/100]  LR=4.12e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.7%  F1=0.997  Prod=99.8%
+  Val   → Bin=98.7%  Def=90.2%  F1=0.889  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.939   0.939   0.939  →
+  cut                       1.000   0.824   0.903  ↓
+  deformation               0.824   0.933   0.875  ↓
+  fracture                  0.929   0.907   0.918  ↑
+  hole_void                 0.964   0.981   0.972  →
+  minor_defect              0.756   0.810   0.782  ↓
+  scratch                   0.870   0.690   0.769  ↓
+  surface_quality           0.925   0.984   0.954  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.901   0.884   0.889
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 58/100]  LR=3.97e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.8%  F1=0.998  Prod=99.9%
+  Val   → Bin=98.8%  Def=89.2%  F1=0.876  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.969   0.939   0.954  ↑
+  cut                       1.000   0.824   0.903  →
+  deformation               0.800   0.800   0.800  ↓
+  fracture                  0.864   0.884   0.874  ↓
+  hole_void                 0.964   0.981   0.972  →
+  minor_defect              0.761   0.833   0.795  ↑
+  scratch                   0.870   0.690   0.769  →
+  surface_quality           0.910   0.968   0.938  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.892   0.865   0.876
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 59/100]  LR=3.82e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.6%  Def=89.2%  F1=0.873  Prod=99.8%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.967   0.879   0.921  ↓
+  cut                       1.000   0.765   0.867  ↓
+  deformation               0.800   0.800   0.800  →
+  fracture                  0.864   0.884   0.874  →
+  hole_void                 0.946   0.981   0.964  ↓
+  minor_defect              0.766   0.857   0.809  ↑
+  scratch                   0.913   0.724   0.808  ↑
+  surface_quality           0.912   0.984   0.947  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.896   0.859   0.873
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 60/100]  LR=3.67e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.6%  Def=88.5%  F1=0.868  Prod=99.8%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.969   0.939   0.954  ↑
+  cut                       1.000   0.824   0.903  ↑
+  deformation               0.800   0.800   0.800  →
+  fracture                  0.848   0.907   0.876  →
+  hole_void                 0.964   0.981   0.972  ↑
+  minor_defect              0.750   0.857   0.800  ↓
+  scratch                   0.857   0.621   0.720  ↓
+  surface_quality           0.908   0.937   0.922  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.887   0.858   0.868
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 61/100]  LR=3.52e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=1.000  Prod=99.9%
+  Val   → Bin=98.9%  Def=90.9%  F1=0.896  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.970   0.970   0.970  ↑
+  cut                       1.000   0.824   0.903  →
+  deformation               0.812   0.867   0.839  ↑
+  fracture                  0.909   0.930   0.920  ↑
+  hole_void                 0.964   0.981   0.972  →
+  minor_defect              0.787   0.881   0.831  ↑
+  scratch                   0.913   0.724   0.808  ↑
+  surface_quality           0.922   0.937   0.929  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.910   0.889   0.896
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 62/100]  LR=3.37e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.7%  Def=89.2%  F1=0.882  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.967   0.879   0.921  ↓
+  cut                       1.000   0.824   0.903  →
+  deformation               0.867   0.867   0.867  ↑
+  fracture                  0.907   0.907   0.907  ↓
+  hole_void                 0.930   0.981   0.955  ↓
+  minor_defect              0.731   0.905   0.809  ↓
+  scratch                   0.950   0.655   0.776  ↓
+  surface_quality           0.908   0.937   0.922  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.907   0.869   0.882
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 63/100]  LR=3.23e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.7%  Def=89.5%  F1=0.881  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.967   0.879   0.921  →
+  cut                       1.000   0.765   0.867  ↓
+  deformation               0.812   0.867   0.839  ↓
+  fracture                  0.909   0.930   0.920  ↑
+  hole_void                 0.930   0.981   0.955  →
+  minor_defect              0.731   0.905   0.809  →
+  scratch                   0.952   0.690   0.800  ↑
+  surface_quality           0.937   0.937   0.937  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.905   0.869   0.881
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 64/100]  LR=3.08e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=99.9%  F1=0.998  Prod=99.9%
+  Val   → Bin=98.8%  Def=88.2%  F1=0.869  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.967   0.879   0.921  →
+  cut                       1.000   0.824   0.903  ↑
+  deformation               0.867   0.867   0.867  ↑
+  fracture                  0.889   0.930   0.909  ↓
+  hole_void                 0.930   0.981   0.955  →
+  minor_defect              0.679   0.905   0.776  ↓
+  scratch                   0.941   0.552   0.696  ↓
+  surface_quality           0.935   0.921   0.928  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.901   0.857   0.869
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 65/100]  LR=2.94e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=0.999  Prod=99.8%
+  Val   → Bin=98.7%  Def=88.2%  F1=0.862  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.967   0.879   0.921  →
+  cut                       1.000   0.706   0.828  ↓
+  deformation               0.800   0.800   0.800  ↓
+  fracture                  0.886   0.907   0.897  ↓
+  hole_void                 0.946   0.981   0.964  ↑
+  minor_defect              0.698   0.881   0.779  →
+  scratch                   0.950   0.655   0.776  ↑
+  surface_quality           0.909   0.952   0.930  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.895   0.845   0.862
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 66/100]  LR=2.80e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=100.0%  F1=1.000  Prod=99.9%
+  Val   → Bin=98.9%  Def=89.5%  F1=0.868  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.938   0.909   0.923  →
+  cut                       1.000   0.706   0.828  →
+  deformation               0.769   0.667   0.714  ↓
+  fracture                  0.909   0.930   0.920  ↑
+  hole_void                 0.930   0.981   0.955  ↓
+  minor_defect              0.760   0.905   0.826  ↑
+  scratch                   0.917   0.759   0.830  ↑
+  surface_quality           0.938   0.952   0.945  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.895   0.851   0.868
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 67/100]  LR=2.67e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=99.9%  F1=1.000  Prod=99.9%
+  Val   → Bin=98.8%  Def=89.5%  F1=0.877  Prod=100.0%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.969   0.939   0.954  ↑
+  cut                       1.000   0.706   0.828  →
+  deformation               0.846   0.733   0.786  ↑
+  fracture                  0.909   0.930   0.920  →
+  hole_void                 0.946   0.981   0.964  ↑
+  minor_defect              0.725   0.881   0.796  ↓
+  scratch                   0.957   0.759   0.846  ↑
+  surface_quality           0.908   0.937   0.922  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.908   0.858   0.877
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 68/100]  LR=2.53e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.7%  Def=89.9%  F1=0.884  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.968   0.909   0.938  ↓
+  cut                       0.929   0.765   0.839  ↑
+  deformation               0.857   0.800   0.828  ↑
+  fracture                  0.909   0.930   0.920  →
+  hole_void                 0.946   0.981   0.964  →
+  minor_defect              0.755   0.881   0.813  ↑
+  scratch                   0.957   0.759   0.846  →
+  surface_quality           0.908   0.937   0.922  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.904   0.870   0.884
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 69/100]  LR=2.40e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.8%  Def=90.2%  F1=0.884  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             1.000   0.939   0.969  ↑
+  cut                       1.000   0.706   0.828  ↓
+  deformation               0.800   0.800   0.800  ↓
+  fracture                  0.909   0.930   0.920  →
+  hole_void                 0.946   0.981   0.964  →
+  minor_defect              0.771   0.881   0.822  ↑
+  scratch                   0.957   0.759   0.846  →
+  surface_quality           0.896   0.952   0.923  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.910   0.869   0.884
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 70/100]  LR=2.27e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=100.0%  F1=1.000  Prod=100.0%
+  Val   → Bin=98.7%  Def=90.2%  F1=0.883  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.969   0.939   0.954  ↓
+  cut                       1.000   0.706   0.828  →
+  deformation               0.800   0.800   0.800  →
+  fracture                  0.909   0.930   0.920  →
+  hole_void                 0.946   0.981   0.964  →
+  minor_defect              0.771   0.881   0.822  →
+  scratch                   0.957   0.759   0.846  →
+  surface_quality           0.909   0.952   0.930  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.908   0.869   0.883
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 71/100]  LR=2.14e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=99.9%  F1=0.999  Prod=99.9%
+  Val   → Bin=98.7%  Def=89.5%  F1=0.871  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.935   0.879   0.906  ↓
+  cut                       1.000   0.706   0.828  →
+  deformation               0.733   0.733   0.733  ↓
+  fracture                  0.889   0.930   0.909  ↓
+  hole_void                 0.946   0.981   0.964  →
+  minor_defect              0.787   0.881   0.831  ↑
+  scratch                   0.958   0.793   0.868  ↑
+  surface_quality           0.909   0.952   0.930  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.895   0.857   0.871
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 72/100]  LR=2.02e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=100.0%  F1=1.000  Prod=99.9%
+  Val   → Bin=98.8%  Def=90.2%  F1=0.883  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.968   0.909   0.938  ↑
+  cut                       1.000   0.706   0.828  →
+  deformation               0.800   0.800   0.800  ↑
+  fracture                  0.911   0.953   0.932  ↑
+  hole_void                 0.930   0.981   0.955  ↓
+  minor_defect              0.776   0.905   0.835  →
+  scratch                   0.957   0.759   0.846  ↓
+  surface_quality           0.922   0.937   0.929  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.908   0.869   0.883
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 73/100]  LR=1.89e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=99.9%  F1=0.999  Prod=100.0%
+  Val   → Bin=98.9%  Def=91.2%  F1=0.898  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.938   0.909   0.923  ↓
+  cut                       1.000   0.882   0.938  ↑
+  deformation               0.846   0.733   0.786  ↓
+  fracture                  0.909   0.930   0.920  ↓
+  hole_void                 0.930   0.981   0.955  →
+  minor_defect              0.844   0.905   0.874  ↑
+  scratch                   0.920   0.793   0.852  ↑
+  surface_quality           0.923   0.952   0.938  ↑
+  ────────────────────────────────────────────────────────
+  MACRO                     0.914   0.886   0.898
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 74/100]  LR=1.78e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=100.0%  F1=1.000  Prod=100.0%
+  Val   → Bin=98.6%  Def=89.9%  F1=0.879  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.935   0.879   0.906  ↓
+  cut                       1.000   0.824   0.903  ↓
+  deformation               0.786   0.733   0.759  ↓
+  fracture                  0.930   0.930   0.930  ↑
+  hole_void                 0.930   0.981   0.955  →
+  minor_defect              0.792   0.905   0.844  ↓
+  scratch                   0.913   0.724   0.808  ↓
+  surface_quality           0.909   0.952   0.930  ↓
+  ────────────────────────────────────────────────────────
+  MACRO                     0.899   0.866   0.879
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 75/100]  LR=1.66e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=100.0%  F1=1.000  Prod=100.0%
+  Val   → Bin=98.6%  Def=89.5%  F1=0.869  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.938   0.909   0.923  ↑
+  cut                       1.000   0.706   0.828  ↓
+  deformation               0.733   0.733   0.733  ↓
+  fracture                  0.930   0.930   0.930  →
+  hole_void                 0.946   0.981   0.964  ↑
+  minor_defect              0.776   0.905   0.835  ↓
+  scratch                   0.913   0.724   0.808  →
+  surface_quality           0.909   0.952   0.930  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.893   0.855   0.869
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 76/100]  LR=1.55e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=100.0%  Def=100.0%  F1=1.000  Prod=99.9%
+  Val   → Bin=98.6%  Def=89.9%  F1=0.875  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.938   0.909   0.923  →
+  cut                       1.000   0.765   0.867  ↑
+  deformation               0.733   0.733   0.733  →
+  fracture                  0.930   0.930   0.930  →
+  hole_void                 0.930   0.981   0.955  ↓
+  minor_defect              0.809   0.905   0.854  ↑
+  scratch                   0.913   0.724   0.808  →
+  surface_quality           0.909   0.952   0.930  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.895   0.863   0.875
+
+  (no improvement  best_f1=0.9027)
+
+Epoch [ 77/100]  LR=1.44e-05  TaskW=[0.35  0.40  0.25]
+
+  Train → Bin=99.9%  Def=100.0%  F1=1.000  Prod=100.0%
+  Val   → Bin=98.7%  Def=88.9%  F1=0.868  Prod=99.9%
+
+  Class                         P       R      F1  Trend
+  ────────────────────────────────────────────────────────
+  contamination             0.968   0.909   0.938  ↑
+  cut                       1.000   0.824   0.903  ↑
+  deformation               0.786   0.733   0.759  ↑
+  fracture                  0.886   0.907   0.897  ↓
+  hole_void                 0.930   0.981   0.955  →
+  minor_defect              0.760   0.905   0.826  ↓
+  scratch                   0.900   0.621   0.735  ↓
+  surface_quality           0.909   0.952   0.930  →
+  ────────────────────────────────────────────────────────
+  MACRO                     0.892   0.854   0.868
+
+  (no improvement  best_f1=0.9027)

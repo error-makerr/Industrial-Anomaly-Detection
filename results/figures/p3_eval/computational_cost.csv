@@ -1,0 +1,2 @@
+model,params_M,flops_G,latency_ms
+EdgeNetV4,4.17,0.37,7.4

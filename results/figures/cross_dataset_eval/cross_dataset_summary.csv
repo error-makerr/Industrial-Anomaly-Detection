@@ -1,0 +1,4 @@
+Dataset,Split Mode,Test Samples,Normal,Defective,Binary F1,Binary Macro F1,AUC-ROC,Defect-Type Samples,Defect-Type Macro F1
+Mvtec,csv_test,556,428,128,0.9551,0.9712,0.9926,97,0.9429
+Casting,csv_test,850,347,503,0.999,0.9988,0.9999,0,N/A
+Magnetic,csv_test,262,190,72,0.9722,0.9808,0.9823,72,0.3339

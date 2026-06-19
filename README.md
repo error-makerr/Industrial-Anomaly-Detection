@@ -1,6 +1,8 @@
 # EdgeNetV4 — Multi-Task Industrial Defect Inspection
 
-see report for graph and other matrices- https://drive.google.com/file/d/1EGXGsRxu1zAXTjHX2bkCsJc1x1f1Yzeq/view?usp=sharing
+see report for graph and other matrices - https://drive.google.com/file/d/1EGXGsRxu1zAXTjHX2bkCsJc1x1f1Yzeq/view?usp=sharing
+live hugging face url - https://huggingface.co/spaces/Researchdemo834/defectvision
+
 > **Three inspection questions. One forward pass. One model.**
 >
 > Is it defective? → What type of defect? → Which product?

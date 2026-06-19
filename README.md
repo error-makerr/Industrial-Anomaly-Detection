@@ -1,8 +1,5 @@
 # EdgeNetV4 — Multi-Task Industrial Defect Inspection
 
-<p align="center">
-  <img src="results/figures/end_to_end_pipe.png" width="90%" alt="EdgeNetV4 End-to-End Pipeline"/>
-</p>
 
 > **Three inspection questions. One forward pass. One model.**
 >
@@ -31,9 +28,7 @@ Every defect class achieves F1 > 0.91, including `minor_defect` (F1 = 0.940) wit
 
 ## Architecture
 
-<p align="center">
-  <img src="results/figures/architecture.png" width="85%" alt="EdgeNetV4 Architecture"/>
-</p>
+
 
 EdgeNetV4 uses a **compound-scaled MBConv backbone with squeeze-and-excitation attention (B2 configuration)** exposing three feature scales:
 
@@ -276,9 +271,6 @@ Industrial-Anomaly-Detection/
 
 ## Web Demo — DefectVision
 
-<p align="center">
-  <img src="results/figures/defectvision_demo.png" width="85%" alt="DefectVision Web Interface"/>
-</p>
 
 A live web interface that accepts an inspection image and returns:
 - Binary classification (defective / non-defective) with confidence score
